@@ -1,0 +1,6 @@
+@isg_crm_HostAddress = http://localhost:5263
+
+GET {{isg_crm_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
