@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using isg_crm.Data;
@@ -11,9 +12,11 @@ using isg_crm.Data;
 namespace isg_crm.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250810151615_CreateManagerManual")]
+    partial class CreateManagerManual
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,14 +65,14 @@ namespace isg_crm.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("419e4b74-1f03-43ed-ad30-0d0ed1d3b30b"),
-                            CreatedAt = new DateTime(2025, 8, 10, 15, 23, 50, 736, DateTimeKind.Utc).AddTicks(2760),
+                            Id = new Guid("2a41d642-8948-4ece-8290-a0fde85dd591"),
+                            CreatedAt = new DateTime(2025, 8, 10, 15, 16, 15, 750, DateTimeKind.Utc).AddTicks(5580),
                             Email = "admin@isg.com",
                             Name = "Sistem Admini",
-                            Password = "$2a$11$BBC2KPUDOPeU8DlvgupKKuG7aBUCI/VltWbMVZ7x7LHm2.QpLuh9e",
+                            Password = "$2a$11$ph65XD3YgikCMmSXc0eMf.SalXbBve0k9hT51XhNw2IkTOIagHm4G",
                             Type = 1,
-                            UpdatedAt = new DateTime(2025, 8, 10, 15, 23, 50, 736, DateTimeKind.Utc).AddTicks(2760),
-                            Uuid = new Guid("c38fe6cf-1e2e-4e7f-8d0f-2188513972d8")
+                            UpdatedAt = new DateTime(2025, 8, 10, 15, 16, 15, 750, DateTimeKind.Utc).AddTicks(5580),
+                            Uuid = new Guid("126273ea-3712-489a-803a-53519fefb7fc")
                         });
                 });
 
@@ -92,9 +95,8 @@ namespace isg_crm.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("IdentityNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("IdentityNumber")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Mission")
                         .IsRequired()

@@ -14,14 +14,19 @@ namespace isg_crm.Data
         {
         }
         public DbSet<Manager> Managers { get; set; }
+        public DbSet<Ohs_Employee> Ohs_Employees { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             // Configure the relationship for OfferedTalents
-            // modelBuilder.Entity<Manager>()
-            //     .HasIndex(u => u.Email)
-            //     .IsUnique();  // Email alanı benzersiz olacak
+            modelBuilder.Entity<Manager>()
+                .HasIndex(u => u.Email)
+                .IsUnique();  // Email alanı benzersiz olacak
+            modelBuilder.Entity<Ohs_Employee>()
+            .HasIndex(u => u.Email)
+            .IsUnique();
+
             modelBuilder.Entity<Manager>().HasData(
             new Manager
             {
