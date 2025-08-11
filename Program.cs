@@ -3,18 +3,17 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using isg_crm.Models;
-// using isg_crm.Repositories;
+using isg_crm.Repositories;
 using isg_crm.Services;
 using isg_crm.Data;
-// using isg_crm.Interfaces;
+using isg_crm.Interfaces;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
-using isg_crm.Interfaces;
-using isg_crm.Repositories;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -81,6 +80,10 @@ builder.Services.AddSwaggerGen(options =>
 
 
 builder.Services.AddScoped<IManagerInterface, ManagerRepository>();
+builder.Services.AddScoped<IEmployeeInterface, EmployeeRepository>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<EmailService>();
+
 
 builder.Services.AddControllers();
 builder.Services.AddAuthentication();

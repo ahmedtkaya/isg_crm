@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using isg_crm.Data;
@@ -11,9 +12,11 @@ using isg_crm.Data;
 namespace isg_crm.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250810143605_OhsEmployeeTableCreated")]
+    partial class OhsEmployeeTableCreated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,19 +61,6 @@ namespace isg_crm.Migrations
                         .IsUnique();
 
                     b.ToTable("Managers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("419e4b74-1f03-43ed-ad30-0d0ed1d3b30b"),
-                            CreatedAt = new DateTime(2025, 8, 10, 15, 23, 50, 736, DateTimeKind.Utc).AddTicks(2760),
-                            Email = "admin@isg.com",
-                            Name = "Sistem Admini",
-                            Password = "$2a$11$BBC2KPUDOPeU8DlvgupKKuG7aBUCI/VltWbMVZ7x7LHm2.QpLuh9e",
-                            Type = 1,
-                            UpdatedAt = new DateTime(2025, 8, 10, 15, 23, 50, 736, DateTimeKind.Utc).AddTicks(2760),
-                            Uuid = new Guid("c38fe6cf-1e2e-4e7f-8d0f-2188513972d8")
-                        });
                 });
 
             modelBuilder.Entity("isg_crm.Models.Ohs_Employee", b =>
@@ -92,9 +82,8 @@ namespace isg_crm.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("IdentityNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("IdentityNumber")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Mission")
                         .IsRequired()
