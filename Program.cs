@@ -81,6 +81,7 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddScoped<IManagerInterface, ManagerRepository>();
 builder.Services.AddScoped<IEmployeeInterface, EmployeeRepository>();
+builder.Services.AddScoped<ICompanyInterface, CompanyRepository>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<EmailService>();
 
