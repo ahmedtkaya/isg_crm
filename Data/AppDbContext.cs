@@ -15,6 +15,7 @@ namespace isg_crm.Data
         }
         public DbSet<Manager> Managers { get; set; }
         public DbSet<Ohs_Employee> Ohs_Employees { get; set; }
+        public DbSet<Company> Company { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -25,6 +26,9 @@ namespace isg_crm.Data
                 .IsUnique();  // Email alanı benzersiz olacak
             modelBuilder.Entity<Ohs_Employee>()
             .HasIndex(u => u.Email)
+            .IsUnique();
+            modelBuilder.Entity<Company>()
+            .HasIndex(u => u.CompanyEmail)
             .IsUnique();
 
             modelBuilder.Entity<Manager>().HasData(
