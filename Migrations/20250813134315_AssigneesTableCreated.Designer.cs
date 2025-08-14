@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using isg_crm.Data;
@@ -11,9 +12,11 @@ using isg_crm.Data;
 namespace isg_crm.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250813134315_AssigneesTableCreated")]
+    partial class AssigneesTableCreated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,10 +54,6 @@ namespace isg_crm.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CompanyId");
-
-                    b.HasIndex("EmployeeId");
 
                     b.ToTable("Assignees");
                 });
@@ -150,14 +149,14 @@ namespace isg_crm.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("14c3777b-8f1b-499f-84db-23f584a6cf11"),
-                            CreatedAt = new DateTime(2025, 8, 13, 18, 57, 53, 296, DateTimeKind.Utc).AddTicks(1750),
+                            Id = new Guid("9de484a5-54c0-4751-98d2-7ff682625d00"),
+                            CreatedAt = new DateTime(2025, 8, 13, 13, 43, 15, 763, DateTimeKind.Utc).AddTicks(3030),
                             Email = "admin@isg.com",
                             Name = "Sistem Admini",
-                            Password = "$2a$11$5jViKApjeFd7cU7a3veeTuKwzdERIrur/.imEk.8X0Iyq2JB1Zvcm",
+                            Password = "$2a$11$V5iBwhiAzQa7G0grcevOwefk0Zye3dY3stuOdKEvITQWsyafTx3KS",
                             Type = 1,
-                            UpdatedAt = new DateTime(2025, 8, 13, 18, 57, 53, 296, DateTimeKind.Utc).AddTicks(1750),
-                            Uuid = new Guid("bf08c4fa-13bb-4afa-bf2b-4378ab12cc03")
+                            UpdatedAt = new DateTime(2025, 8, 13, 13, 43, 15, 763, DateTimeKind.Utc).AddTicks(3030),
+                            Uuid = new Guid("2c304005-8ecb-4f49-8059-d646914c6175")
                         });
                 });
 
@@ -216,25 +215,6 @@ namespace isg_crm.Migrations
                         .IsUnique();
 
                     b.ToTable("Ohs_Employees");
-                });
-
-            modelBuilder.Entity("isg_crm.Models.Assignees", b =>
-                {
-                    b.HasOne("isg_crm.Models.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("isg_crm.Models.Ohs_Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Company");
-
-                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("isg_crm.Models.Company", b =>

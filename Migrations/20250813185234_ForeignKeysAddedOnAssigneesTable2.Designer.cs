@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using isg_crm.Data;
@@ -11,9 +12,11 @@ using isg_crm.Data;
 namespace isg_crm.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250813185234_ForeignKeysAddedOnAssigneesTable2")]
+    partial class ForeignKeysAddedOnAssigneesTable2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,14 +153,14 @@ namespace isg_crm.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("14c3777b-8f1b-499f-84db-23f584a6cf11"),
-                            CreatedAt = new DateTime(2025, 8, 13, 18, 57, 53, 296, DateTimeKind.Utc).AddTicks(1750),
+                            Id = new Guid("26b51a77-94c5-4d0c-945a-0245cf7cafdd"),
+                            CreatedAt = new DateTime(2025, 8, 13, 18, 52, 34, 125, DateTimeKind.Utc).AddTicks(8350),
                             Email = "admin@isg.com",
                             Name = "Sistem Admini",
-                            Password = "$2a$11$5jViKApjeFd7cU7a3veeTuKwzdERIrur/.imEk.8X0Iyq2JB1Zvcm",
+                            Password = "$2a$11$.rqU0bxtqMQfHAf1cL8cfOp7klX4U6v99aBVRkzm35Ta9F4OzZSvq",
                             Type = 1,
-                            UpdatedAt = new DateTime(2025, 8, 13, 18, 57, 53, 296, DateTimeKind.Utc).AddTicks(1750),
-                            Uuid = new Guid("bf08c4fa-13bb-4afa-bf2b-4378ab12cc03")
+                            UpdatedAt = new DateTime(2025, 8, 13, 18, 52, 34, 125, DateTimeKind.Utc).AddTicks(8350),
+                            Uuid = new Guid("7a1c8dd7-c4e4-4796-81e2-bf017076f9dd")
                         });
                 });
 
