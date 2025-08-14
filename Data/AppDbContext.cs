@@ -8,6 +8,7 @@ using isg_crm.Models;
 
 namespace isg_crm.Data
 {
+    //her migrationsda managers ve company tablosu verileri siliniyor!!
     public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
@@ -16,6 +17,7 @@ namespace isg_crm.Data
         public DbSet<Manager> Managers { get; set; }
         public DbSet<Ohs_Employee> Ohs_Employees { get; set; }
         public DbSet<Company> Company { get; set; }
+        public DbSet<Assignees> Assignees { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
