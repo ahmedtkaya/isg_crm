@@ -67,6 +67,10 @@ namespace isg_crm.Repositories
         {
             return await _context.Ohs_Employees.ToListAsync();
         }
+        public async Task<Ohs_Employee> GetUserByEmailAsync(string email)
+        {
+            return await _context.Ohs_Employees.FirstOrDefaultAsync(u => u.Email == email);
+        }
 
 
     }

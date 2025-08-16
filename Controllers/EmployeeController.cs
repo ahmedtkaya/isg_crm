@@ -19,7 +19,6 @@ namespace isg_crm.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         public EmployeeController(IEmployeeInterface employeeRepository, IHttpContextAccessor httpContextAccessor)
         {
-
             _httpContextAccessor = httpContextAccessor;
             _employeeRepository = employeeRepository;
         }

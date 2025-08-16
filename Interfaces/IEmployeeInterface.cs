@@ -13,6 +13,7 @@ namespace isg_crm.Interfaces
         Task DeleteEmployeeAsync(Guid id);
         Task<IEnumerable<Ohs_Employee>> GetAllEmployeesAsync();
         Task<Ohs_Employee> GetEmployeeByIdAsync(Guid id);
+        Task<Ohs_Employee?> GetUserByEmailAsync(string email);
 
 
     }

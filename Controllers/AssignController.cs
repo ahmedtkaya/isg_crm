@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using isg_crm.Data;
 using isg_crm.Dtos;
 using isg_crm.Interfaces;
+using isg_crm.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -83,6 +85,42 @@ namespace isg_crm.Controllers
             {
                 return BadRequest("An error occurred while deleting the company.");
             }
+        }
+
+        [HttpGet("my-assign")]
+        [Authorize] // JWT authentication gerekli
+        public async Task<IActionResult> GetMyAssigns()
+        {
+            var employeeIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (employeeIdClaim == null)
+                return Unauthorized();
+
+            var employeeId = Guid.Parse(employeeIdClaim);
+            var assigns = await _assignInterface.GetByAssignFromEmployeeId(employeeId);
+            return Ok(assigns);
+        }
+
+        [Authorize]
+        [HttpPut("{id}/accepted")]
+        public async Task<IActionResult> UpdateStatus(Guid id)
+        {
+            var employeeIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (employeeIdClaim == null)
+            {
+                return Unauthorized();
+            }
+            var employeeId = Guid.Parse(employeeIdClaim);
+
+            var assign = await _assignInterface.GetAssignByIdAsync(id);
+            if (assign == null)
+            {
+                return BadRequest("There is no assign or you have no permission.");
+            }
+
+            assign.Status = StatusType.Accepted;
+            await _assignInterface.UpdateAsync(assign);
+
+            return Ok(new { message = "Mark as Accepted this assign" });
         }
 
     }

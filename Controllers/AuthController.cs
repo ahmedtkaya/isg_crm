@@ -16,12 +16,14 @@ namespace isg_crm.Controllers
     {
         private readonly TokenService _tokenService;
         private readonly IManagerInterface _managerRepository;
-        public AuthController(TokenService tokenService, IManagerInterface managerInterface)
+        private readonly IEmployeeInterface _employeeRepository;
+        public AuthController(TokenService tokenService, IManagerInterface managerInterface, IEmployeeInterface employeeInterface)
         {
             _tokenService = tokenService;
             _managerRepository = managerInterface;
+            _employeeRepository = employeeInterface;
         }
-        [HttpPost("login")]
+        [HttpPost("admin/login")]
         public async Task<IActionResult> Login([FromBody] LoginManagerDto loginDto)
         {
             var manager = await _managerRepository.GetUserByEmailAsync(loginDto.Email);
@@ -50,7 +52,25 @@ namespace isg_crm.Controllers
                 Token = token,
                 Manager = managerResponse
             });
+        }
+        [HttpPost("employee/login")]
+        public async Task<IActionResult> EmployeeLogin([FromBody] LoginEmployeeDto loginEmployeeDto)
+        {
+            var employee = await _employeeRepository.GetUserByEmailAsync(loginEmployeeDto.Email);
+            if (employee == null || !PasswordHelper.VerifyPassword(loginEmployeeDto.Password, employee.Password))
+            {
+                return Unauthorized(new { message = "Invalid email or password." });
+            }
+            var employeeId = employee.Id;
+            var token = _tokenService.GenerateToken(employeeId, employee.Email);
 
+            var employeeResponse = new
+            {
+                Id = employee.Id,
+                Name = employee.Name,
+                Email = employee.Email,
+            };
+            return Ok(new { Token = token, Employee = employeeResponse });
         }
     }
 }
