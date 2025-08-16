@@ -86,6 +86,23 @@ namespace isg_crm.Repositories
             _context.Assignees.Remove(assign); //üstteki getirdiğim idyi sildik
             return _context.SaveChangesAsync();
         }
+        public async Task<IEnumerable<Assignees>> GetByAssignFromEmployeeId(Guid employeeId)
+        {
+            return await _context.Assignees
+                                 .Where(a => a.EmployeeId == employeeId).Include(a => a.Company)//Include bu veri seti içerisindeki companyId verilerinide göster demek oluyor.
+                                 .ToListAsync();
+        }
+
+        public async Task<Assignees?> GetAssignByIdAsync(Guid id)
+        {
+            return await _context.Assignees.FindAsync(id);
+        }
+        public async Task UpdateAsync(Assignees assignees)
+        {
+            _context.Assignees.Update(assignees);
+            await _context.SaveChangesAsync();
+        }
+
 
     }
 }

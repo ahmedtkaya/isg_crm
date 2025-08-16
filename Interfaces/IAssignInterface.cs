@@ -12,5 +12,9 @@ namespace isg_crm.Interfaces
         Task<Guid> CreateAssignAsync(Guid employeeId, Guid companyId, CreateAssignDto createAssignDto);
         Task<IEnumerable<Assignees>> GetAllAssignsAsync();
         Task DeleteAssignAsync(Guid id);
+        Task<IEnumerable<Assignees>> GetByAssignFromEmployeeId(Guid employeeId);
+
+        Task<Assignees?> GetAssignByIdAsync(Guid id);
+        Task UpdateAsync(Assignees assignees);
     }
 }
