@@ -79,6 +79,7 @@ builder.Services.AddScoped<IEmployeeInterface, EmployeeRepository>();
 builder.Services.AddScoped<ICompanyInterface, CompanyRepository>();
 builder.Services.AddScoped<IAssignInterface, AssignRepository>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IReportInterface, ReportRepository>();
 builder.Services.AddScoped<EmailService>();
 
 

@@ -18,6 +18,7 @@ namespace isg_crm.Data
         public DbSet<Ohs_Employee> Ohs_Employees { get; set; }
         public DbSet<Company> Company { get; set; }
         public DbSet<Assignees> Assignees { get; set; }
+        public DbSet<Report> Reports { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
