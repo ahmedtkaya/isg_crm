@@ -23,7 +23,7 @@ namespace isg_crm.Controllers
             _employeeRepository = employeeRepository;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin,Super Admin")]
         [HttpPost("create")]
         public async Task<IActionResult> CreateEmployee([FromForm] CreateEmployeeDto createEmployeeDto)
         {
@@ -42,7 +42,7 @@ namespace isg_crm.Controllers
             return Ok("Employee created successfully");
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin,Super Admin")]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteEmployee(Guid id)
         {
@@ -53,7 +53,8 @@ namespace isg_crm.Controllers
             await _employeeRepository.DeleteEmployeeAsync(id);
             return Ok("Employee deleted successfully");
         }
-        [Authorize]
+
+        [Authorize(Roles = "Admin,Super Admin")]
         [HttpGet]
         public async Task<IActionResult> GetAllEmployee()
         {
@@ -61,7 +62,7 @@ namespace isg_crm.Controllers
             return Ok(employee);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin,Super Admin")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetEmployeeById(Guid id)
         {

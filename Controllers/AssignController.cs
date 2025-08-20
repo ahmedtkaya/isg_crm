@@ -28,7 +28,7 @@ namespace isg_crm.Controllers
             _context = context;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin,Super Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateAssign([FromBody] CreateAssignDto createAssignDto)
         {
@@ -48,7 +48,7 @@ namespace isg_crm.Controllers
             return Ok(new { Message = "Assign created successfully.", Id = assign, Company = company, Employee = employee });
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin,Super Admin")]
         [HttpGet]
         public async Task<IActionResult> GetAllAssignees()
         {
@@ -68,7 +68,7 @@ namespace isg_crm.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin,Super Admin")]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteAssign(Guid id)
         {
@@ -88,7 +88,7 @@ namespace isg_crm.Controllers
         }
 
         [HttpGet("my-assign")]
-        [Authorize] // JWT authentication gerekli
+        [Authorize]
         public async Task<IActionResult> GetMyAssigns()
         {
             var employeeIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
