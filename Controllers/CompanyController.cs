@@ -26,7 +26,7 @@ namespace isg_crm.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin,Super Admin")]
         public async Task<IActionResult> CreateCompany([FromForm] CreateCompanyDto createCompanyDto)
         {
             if (!ModelState.IsValid)
@@ -55,7 +55,7 @@ namespace isg_crm.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin,Super Admin")] //kaldırılabilir çünkü frontendde dropdown menüde assign olan companyler mi görünecek onu ayarlamam lazım? şuan çözüldü ama bakalım bi dursun bu not
         public async Task<IActionResult> GetAllCompanies()
         {
             var companies = await _companyInterface.GetAllCompaniesAsync();
@@ -67,7 +67,7 @@ namespace isg_crm.Controllers
         }
 
         [HttpDelete("delete/{id}")]
-        [Authorize]
+        [Authorize(Roles = "Admin,Super Admin")]
         public async Task<IActionResult> DeleteCompany(Guid id)
         {
             try

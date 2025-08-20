@@ -34,7 +34,7 @@ namespace isg_crm.Controllers
             }
 
             var managerId = manager.Id;
-            var token = _tokenService.GenerateToken(managerId, manager.Email);
+            var token = _tokenService.GenerateAdminToken(managerId, manager.Email, manager);
 
             var managerResponse = new
             {
@@ -62,7 +62,7 @@ namespace isg_crm.Controllers
                 return Unauthorized(new { message = "Invalid email or password." });
             }
             var employeeId = employee.Id;
-            var token = _tokenService.GenerateToken(employeeId, employee.Email);
+            var token = _tokenService.GenerateEmployeeToken(employeeId, employee.Email);
 
             var employeeResponse = new
             {
