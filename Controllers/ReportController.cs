@@ -73,6 +73,14 @@ namespace isg_crm.Controllers
             }
             return Ok(report);
         }
+        [HttpGet("download/{id}")]
+        [Authorize] //[Authorize(Roles = "Admin,SuperAdmin")]
+        public async Task<IActionResult> DownloadReport(Guid id)
+        {
+            var result = await _reportInterface.DownloadReportAsync(id, User);
+            if (result == null) return NotFound("Report not found or file missing");
+            return result;
+        }
 
     }
 }

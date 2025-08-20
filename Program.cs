@@ -97,10 +97,18 @@ var app = builder.Build();
 
 app.UseStaticFiles(new StaticFileOptions
 {
-    FileProvider = new PhysicalFileProvider(
-        Path.Combine(Directory.GetCurrentDirectory(), "public")),
-    RequestPath = "/public"
+    OnPrepareResponse = ctx =>
+    {
+        if (ctx.File.PhysicalPath.Contains("reports"))
+        {
+            // raporları direkt erişime kapat
+            ctx.Context.Response.StatusCode = 403;
+            ctx.Context.Response.ContentLength = 0;
+            ctx.Context.Response.Body = Stream.Null;
+        }
+    }
 });
+
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using isg_crm.Models;
 using isg_crm.Dtos;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace isg_crm.Interfaces
 {
@@ -14,5 +16,7 @@ namespace isg_crm.Interfaces
         Task<IEnumerable<Report>> GetReportsByCompanyAsync(Guid companyId);
         Task<IEnumerable<Report>> GetReportsByEmployeeIdAsync(Guid employeeId);
         Task DeleteReportAsync(Guid id);
+
+        Task<FileStreamResult?> DownloadReportAsync(Guid id, ClaimsPrincipal user);
     }
 }
