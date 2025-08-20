@@ -2,11 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using isg_crm.Data;
 using isg_crm.Dtos;
 using isg_crm.Interfaces;
 using isg_crm.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace isg_crm.Repositories
@@ -55,13 +58,21 @@ namespace isg_crm.Repositories
                     throw new Exception("Invalid file type. Only .pdf files are allowed.");
                 }
 
-                // çalışan için klasör oluştur
-                var employeeFolder = Path.Combine("public", "reports", employeeId.ToString());
-                Directory.CreateDirectory(employeeFolder);
+                // 🔹 Company + Tarih klasör yapısı
+                var companyFolder = Path.Combine("public", "reports", report.CompanyId.ToString());
+                var dateFolder = DateTime.UtcNow.ToString("yyyy-MM-dd"); // örn. 20250819
+                var fullFolderPath = Path.Combine(companyFolder, dateFolder);
+                Directory.CreateDirectory(fullFolderPath);
 
-                // eşsiz dosya adı oluştur
-                var fileName = $"{report.CompanyId}{fileExtension}";
-                var filePath = Path.Combine(employeeFolder, fileName);
+
+                using var sha256 = SHA256.Create();
+                var hashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(Guid.NewGuid().ToString()));
+                var hashName = Convert.ToHexString(hashBytes).ToLower();
+
+                var hashedFileName = $"{hashName}{fileExtension}";
+                Console.WriteLine("hashlenmiş file name = ", hashedFileName);
+
+                var filePath = Path.Combine(fullFolderPath, hashedFileName);
 
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
@@ -69,7 +80,7 @@ namespace isg_crm.Repositories
                 }
 
                 // DB'ye URL olarak kaydet
-                report.ReportFileUrl = $"/public/reports/{employeeId}/{fileName}";
+                report.ReportFileUrl = Path.Combine("reports", report.CompanyId.ToString(), dateFolder, hashedFileName);
             }
             await _context.Reports.AddAsync(report);
             await _context.SaveChangesAsync();
@@ -109,6 +120,31 @@ namespace isg_crm.Repositories
             }
             _context.Reports.Remove(report);
             return _context.SaveChangesAsync();
+        }
+        public async Task<FileStreamResult?> DownloadReportAsync(Guid reportId, ClaimsPrincipal user)
+        {
+            var report = await _context.Reports.FindAsync(reportId);
+            if (report == null) return null;
+
+            // // 🔹 Rol kontrolü (sadece Admin ve SuperAdmin)
+            // if (!user.IsInRole("Admin") && !user.IsInRole("SuperAdmin"))
+            //     throw new UnauthorizedAccessException("You are not allowed to download this report.");
+
+            var filePath = Path.Combine("public", report.ReportFileUrl);
+            if (!File.Exists(filePath))
+                return null;
+
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(filePath, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+
+            return new FileStreamResult(memory, "application/pdf")
+            {
+                FileDownloadName = $"{report.ReportType}.pdf"
+            };
         }
 
     }
