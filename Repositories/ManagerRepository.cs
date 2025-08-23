@@ -22,6 +22,18 @@ namespace isg_crm.Repositories
         {
             _context = context;
         }
+        public async Task CreateManagerAsync(Guid managerId, CreateManagerDto createManagerDto)
+        {
+            var manager = new Manager
+            {
+                Email = createManagerDto.Email,
+                Name = createManagerDto.Name,
+                Password = BCrypt.Net.BCrypt.HashPassword(createManagerDto.Password),
+                Type = createManagerDto.Type
+            };
+            await _context.Managers.AddAsync(manager);
+            await _context.SaveChangesAsync();
+        }
         public async Task<bool> IsEmailRegisteredAsync(string email)
         {
             return await _context.Managers.AnyAsync(u => u.Email == email);

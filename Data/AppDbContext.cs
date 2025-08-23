@@ -34,20 +34,20 @@ namespace isg_crm.Data
             modelBuilder.Entity<Company>()
             .HasIndex(u => u.CompanyEmail)
             .IsUnique();
-
-            modelBuilder.Entity<Manager>().HasData(
-            new Manager
-            {
-                Id = Guid.NewGuid(), //new Guid("sabit değer); şeklinde yapalım.
-                Uuid = Guid.NewGuid(),
-                Email = "admin@isg.com",
-                Type = ManagerType.Admin,
-                Name = "Sistem Admini",
-                Password = BCrypt.Net.BCrypt.HashPassword("123456"),
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
-            }
-        );
+            // tabloları sildiği için burayı kapattım. onun yerine manager ekledim.
+            //     modelBuilder.Entity<Manager>().HasData(
+            //     new Manager
+            //     {
+            //         Id = Guid.NewGuid(), //new Guid("sabit değer); şeklinde yapalım.
+            //         Uuid = Guid.NewGuid(),
+            //         Email = "admin@isg.com",
+            //         Type = ManagerType.Admin,
+            //         Name = "Sistem Admini",
+            //         Password = BCrypt.Net.BCrypt.HashPassword("123456"),
+            //         CreatedAt = DateTime.UtcNow,
+            //         UpdatedAt = DateTime.UtcNow
+            //     }
+            // );
 
         }
     }
