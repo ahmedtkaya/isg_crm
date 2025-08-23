@@ -8,7 +8,7 @@ using isg_crm.Models;
 
 namespace isg_crm.Data
 {
-    //her migrationsda managers ve company tablosu verileri siliniyor!!
+    //her migrationsda ohs_employee hariç bütün veriler siliniyor!!!!!
     public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
@@ -19,6 +19,7 @@ namespace isg_crm.Data
         public DbSet<Company> Company { get; set; }
         public DbSet<Assignees> Assignees { get; set; }
         public DbSet<Report> Reports { get; set; }
+        public DbSet<Mission> Missions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -37,7 +38,7 @@ namespace isg_crm.Data
             modelBuilder.Entity<Manager>().HasData(
             new Manager
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.NewGuid(), //new Guid("sabit değer); şeklinde yapalım.
                 Uuid = Guid.NewGuid(),
                 Email = "admin@isg.com",
                 Type = ManagerType.Admin,
