@@ -23,6 +23,7 @@ namespace isg_crm.Controllers
         [Authorize]
         public async Task<IActionResult> CreateReport([FromForm] CreateReportDto createReportDto, IFormFile fileUrl)
         {
+            //bu istekte dbye yazmasa bile reports klasöründe rapor oluşturuyor bunu düzeltelim bu yanlış.
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
