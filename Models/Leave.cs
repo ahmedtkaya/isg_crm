@@ -13,6 +13,8 @@ namespace isg_crm.Models
         public DateTime EndDay { get; set; }
         public Guid EmployeeId { get; set; }
         public Ohs_Employee Employee { get; set; }
+        public LeaveType LeaveType { get; set; }
+        public ApproveStatus Status { get; set; }
         public string? Description { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
