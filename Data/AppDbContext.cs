@@ -20,6 +20,7 @@ namespace isg_crm.Data
         public DbSet<Assignees> Assignees { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<Mission> Missions { get; set; }
+        public DbSet<AuditLog> AuditLogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
