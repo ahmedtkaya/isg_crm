@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+//admine sadece status değiştirme yetkisi verilecek, bu isteği çalışan da kullanıp izin talebini gönderebilecek
 namespace isg_crm.Models
 {
     public class Leave
