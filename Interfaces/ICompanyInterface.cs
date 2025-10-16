@@ -13,6 +13,7 @@ namespace isg_crm.Interfaces
         Task<Company> GetCompanyByIdAsync(Guid id);
         Task<IEnumerable<Company>> GetAllCompaniesAsync();
         Task DeleteCompanyAsync(Guid id);
+        Task UpdateCompanyAsync(Guid id, UpdateCompanyDto updateCompanyDto);
 
     }
 }

@@ -16,5 +16,6 @@ namespace isg_crm.Interfaces
 
         Task<Assignees?> GetAssignByIdAsync(Guid id);
         Task UpdateAsync(Assignees assignees);
+        Task UpdateAssignAsync(UpdateAssignDto updateAssignDto, Guid id);
     }
 }

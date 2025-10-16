@@ -69,5 +69,24 @@ namespace isg_crm.Repositories
             _context.Company.Remove(company);
             return _context.SaveChangesAsync();
         }
+        public async Task UpdateCompanyAsync(Guid id, UpdateCompanyDto updateCompanyDto)
+        {
+            var company = await _context.Company.FindAsync(id);
+            if (company == null)
+            {
+                throw new KeyNotFoundException("Company not found.");
+            }
+
+            company.CompanyName = updateCompanyDto.CompanyName;
+            company.CompanyAddress = updateCompanyDto.CompanyAddress;
+            company.CompanyPhone = updateCompanyDto.CompanyPhone;
+            company.CompanyEmail = updateCompanyDto.CompanyEmail;
+            company.CompanyTaxNumber = updateCompanyDto.CompanyTaxNumber;
+            company.WarningClass = updateCompanyDto.WarningClass;
+            company.UpdatedAt = DateTime.UtcNow;
+
+            _context.Company.Update(company);
+            await _context.SaveChangesAsync();
+        }
     }
 }

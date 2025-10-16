@@ -102,6 +102,23 @@ namespace isg_crm.Repositories
             _context.Assignees.Update(assignees);
             await _context.SaveChangesAsync();
         }
+        public async Task UpdateAssignAsync(UpdateAssignDto updateAssignDto, Guid id)
+        {
+            var existingAssign = await _context.Assignees.FindAsync(id);
+            if (existingAssign == null)
+            {
+                throw new KeyNotFoundException("Assign not found.");
+            }
+
+            // Güncellenebilir alanları ayarla
+            existingAssign.Description = updateAssignDto.Description;
+            existingAssign.EmployeeId = updateAssignDto.EmployeeId;
+            existingAssign.Status = StatusType.Pending; // Status alanını güncelle
+            existingAssign.UpdatedAt = DateTime.UtcNow; // Güncelleme zamanını ayarla
+
+            _context.Assignees.Update(existingAssign);
+            await _context.SaveChangesAsync();
+        }
 
 
     }
