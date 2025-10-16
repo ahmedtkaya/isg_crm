@@ -123,5 +123,28 @@ namespace isg_crm.Controllers
             return Ok(new { message = "Mark as Accepted this assign" });
         }
 
+        [Authorize(Roles = "Admin,Super Admin")]
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateAssign([FromQuery] Guid id, [FromBody] UpdateAssignDto updateAssignDto)
+        {
+            if (updateAssignDto == null)
+            {
+                return BadRequest("Update data is required.");
+            }
+            try
+            {
+                await _assignInterface.UpdateAssignAsync(updateAssignDto, id);
+                return Ok(new { Message = "Assign updated successfully." });
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound("Assign not found.");
+            }
+            catch (Exception)
+            {
+                return BadRequest("An error occurred while updating the assign.");
+            }
+        }
+
     }
 }

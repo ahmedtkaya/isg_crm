@@ -84,5 +84,23 @@ namespace isg_crm.Controllers
                 return BadRequest("An error occurred while deleting the company.");
             }
         }
+        [Authorize(Roles = "Admin,Super Admin")]
+        [HttpPut("update/{id}")]
+        public async Task<IActionResult> UpdateCompany(Guid id, [FromForm] UpdateCompanyDto updateCompanyDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                await _companyInterface.UpdateCompanyAsync(id, updateCompanyDto);
+                return Ok("Company updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred while updating the company: {ex.Message}");
+            }
+        }
     }
 }
